@@ -3,9 +3,11 @@
 **`systemctl`** — control the systemd system and service manager
 
 - **Syntax**
+
   ```bash
   systemctl [OPTIONS...] COMMAND [UNIT...]
   ```
+
 - **Short Description**  
   Primary interface to start, stop, enable, disable, restart, and inspect systemd units (services, sockets, timers, mounts, targets, etc.).
 
@@ -14,15 +16,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Modern Linux distributions use **systemd** as init/PID 1. Administrators need a consistent tool to manage long-running services and boot behavior.
 
 ## What problem it solves
+
 - Control service lifecycle at runtime
 - Configure which units start at boot
 - Inspect status, dependencies, and failures
 - Isolate system states (multi-user, rescue, reboot)
 
 ## When it should be used
+
 - Managing `nginx`, `sshd`, databases, custom apps
 - Troubleshooting failed services
 - Enabling services permanently
@@ -35,12 +40,14 @@ Modern Linux distributions use **systemd** as init/PID 1. Administrators need a 
 # 3. How it Works
 
 ## Internal working
+
 1. Talks to `systemd` via D-Bus (system or user bus).
 2. Commands map to unit operations (start job, stop job, enable symlink creation, etc.).
 3. Unit files from `/lib/systemd/system`, `/etc/systemd/system`, etc. define behavior.
 4. `daemon-reload` re-reads unit files after edits.
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Unit** | Object managed by systemd (`.service`, `.timer`, …) |
@@ -88,6 +95,7 @@ Modern Linux distributions use **systemd** as init/PID 1. Administrators need a 
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # Check nginx status
 systemctl status nginx
@@ -98,6 +106,7 @@ sudo systemctl enable sshd
 ```
 
 ## Intermediate example
+
 ```bash
 # Apply unit file changes after editing
 sudo systemctl daemon-reload
@@ -111,6 +120,7 @@ sudo systemctl reload nginx
 ```
 
 ## Advanced example
+
 ```bash
 # Create drop-in override without editing vendor unit
 sudo systemctl edit myapp.service
@@ -124,6 +134,7 @@ sudo systemctl isolate rescue.target
 ```
 
 ## Real-world system administration example
+
 ```bash
 # Deploy new service unit
 sudo cp myapp.service /etc/systemd/system/
@@ -265,15 +276,18 @@ WantedBy=multi-user.target
 # 14. Interview Questions
 
 ## Beginner
+
 1. How do you start a service with systemd?  
 2. Difference between `start` and `enable`?
 
 ## Intermediate
+
 3. What does `daemon-reload` do?  
 4. How do you make a custom service start on boot?  
 5. What is a unit file?
 
 ## Advanced
+
 6. What does masking a service do?  
 7. Explain targets vs services.  
 8. How do drop-in overrides work (`systemctl edit`)?

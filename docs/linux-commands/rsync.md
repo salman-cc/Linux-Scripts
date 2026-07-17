@@ -3,11 +3,13 @@
 **`rsync`** — a fast, versatile remote (and local) file-copying tool
 
 - **Syntax**
+
   ```bash
   rsync [OPTION]... SRC... [USER@]HOST:DEST
   rsync [OPTION]... [USER@]HOST:SRC... [DEST]
   rsync [OPTION]... SRC... DEST
   ```
+
 - **Short Description**  
   Synchronizes files and directories between locations using an efficient delta-transfer algorithm. Supports local copies, remote over SSH, includes/excludes, bandwidth limits, and deletion of extraneous files.
 
@@ -16,15 +18,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 `cp` and full re-copy of large trees waste time and bandwidth. Systems need incremental, resumable, filterable synchronization for backups and deploys.
 
 ## What problem it solves
+
 - Efficiently update destinations to match sources
 - Remote copy over SSH without manual tar pipelines
 - Selective sync with include/exclude rules
 - Mirrors and backup jobs with optional `--delete`
 
 ## When it should be used
+
 - Deploying static assets and app releases
 - Backing up servers to backup hosts
 - Migrating data between machines
@@ -35,6 +40,7 @@
 # 3. How it Works
 
 ## Internal working
+
 1. Builds file lists on source (and destination for comparisons).
 2. Compares size/time (default) or checksums (`--checksum`).
 3. Transfers only changed parts when possible (delta algorithm for local/remote rsync protocol).
@@ -42,6 +48,7 @@
 5. Optionally removes destination files not present on source (`--delete`).
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Trailing slash** | `src/` copies *contents*; `src` copies the directory node into dest |
@@ -82,12 +89,14 @@
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # Local sync of a folder
 rsync -av ~/Documents/ ~/Backup/Documents/
 ```
 
 ## Intermediate example
+
 ```bash
 # Dry-run a deploy first
 rsync -avn --delete ./build/ user@web01:/var/www/app/
@@ -97,6 +106,7 @@ rsync -av --delete ./build/ user@web01:/var/www/app/
 ```
 
 ## Advanced example
+
 ```bash
 # Exclude caches; compress; show progress
 rsync -azP \
@@ -112,6 +122,7 @@ rsync -aH --delete --link-dest=../2026-07-16 \
 ```
 
 ## Real-world system administration example
+
 ```bash
 # 🔐 Nightly backup of /etc and /home over SSH
 rsync -az --delete \
@@ -232,15 +243,18 @@ rsync -avn --delete src/ dest/ | less   # review first
 # 14. Interview Questions
 
 ## Beginner
+
 1. What is rsync used for?  
 2. What does `-a` mean?
 
 ## Intermediate
+
 3. Explain trailing slash behavior.  
 4. What does `--delete` do and what is the danger?  
 5. How do you do a dry run?
 
 ## Advanced
+
 6. How does `--link-dest` enable efficient snapshots?  
 7. When is `-z` harmful?  
 8. Difference between `rsync` over SSH and rsync daemon mode?
@@ -317,7 +331,7 @@ rsync -az --bwlimit=2000 src/ backup:/data/
 |-------|----------|
 | **Purpose** | Efficient local/remote synchronization |
 | **Most useful options** | `-a`, `-v`, `-z`, `-n`, `-P`, `--delete`, `--exclude` |
-| **Similar commands** | `cp`, `scp`, `tar|ssh`, `rclone` |
+| **Similar commands** | `cp`, `scp`, `tar` over `ssh`, `rclone` |
 | **Best practices** | Dry-run; respect trailing slashes; secure SSH |
 | **Common mistakes** | `--delete` disasters; wrong slash; missing remote rsync |
 

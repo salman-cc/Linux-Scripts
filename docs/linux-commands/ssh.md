@@ -3,10 +3,12 @@
 **`ssh`** — OpenSSH remote login client
 
 - **Syntax**
+
   ```bash
   ssh [options] [user@]hostname [command]
   ssh [-p port] [-i identity_file] destination [command]
   ```
+
 - **Short Description**  
   Provides encrypted remote shell access and secure command execution over an insecure network. Also forms the transport for `scp`, `sftp`, and `rsync -e ssh`.
 
@@ -15,15 +17,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Remote administration must protect credentials and session data from eavesdropping and tampering. SSH replaced insecure protocols like Telnet and rsh.
 
 ## What problem it solves
+
 - Interactive remote terminal sessions
 - Non-interactive remote command execution
 - Secure tunneling (port forwarding)
 - Key-based automation without passwords
 
 ## When it should be used
+
 - Managing Linux servers and network devices
 - Git operations over SSH
 - Jump hosts / bastions
@@ -34,6 +39,7 @@ Remote administration must protect credentials and session data from eavesdroppi
 # 3. How it Works
 
 ## Internal working
+
 1. TCP connect to port 22 (default).
 2. Protocol version exchange and algorithm negotiation.
 3. Server host key verification against `~/.ssh/known_hosts`.
@@ -42,6 +48,7 @@ Remote administration must protect credentials and session data from eavesdroppi
 6. All traffic encrypted and integrity-protected.
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Host key** | Server identity; first connect prompts to trust |
@@ -80,6 +87,7 @@ Remote administration must protect credentials and session data from eavesdroppi
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # Login to remote server
 ssh alice@192.168.1.50
@@ -89,6 +97,7 @@ ssh alice@web01 'uptime'
 ```
 
 ## Intermediate example
+
 ```bash
 # Specific key and port
 ssh -i ~/.ssh/id_ed25519 -p 2222 deploy@prod.example.com
@@ -98,6 +107,7 @@ ssh web01 'df -h; free -m'
 ```
 
 ## Advanced example
+
 ```bash
 # Jump through bastion to private host
 ssh -J bastion.example.com alice@10.0.5.20
@@ -115,6 +125,7 @@ ssh prod
 ```
 
 ## Real-world system administration example
+
 ```bash
 # 🔐 Rolling restart across app hosts
 for h in app01 app02 app03; do
@@ -191,6 +202,7 @@ ssh badhost; echo $?        # 255 (client)
 | Timeout | Network/routing/firewall | Debug with `-v`, check path |
 
 Server key file modes matter:
+
 ```bash
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/id_* ~/.ssh/config
@@ -263,15 +275,18 @@ ssh-copy-id -i ~/.ssh/id_ed25519.pub user@host
 # 14. Interview Questions
 
 ## Beginner
+
 1. Default SSH port?  
 2. How do you run a single remote command?
 
 ## Intermediate
+
 3. How does public key authentication work?  
 4. What is `known_hosts` for?  
 5. Difference between `scp` and `rsync` over SSH?
 
 ## Advanced
+
 6. Explain ProxyJump vs agent forwarding risks.  
 7. How do local/remote/dynamic port forwards differ?  
 8. How would you harden sshd for production?

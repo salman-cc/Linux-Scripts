@@ -3,9 +3,11 @@
 **`<COMMAND>`** — <one-line description>
 
 - **Syntax**
+
   ```bash
   <command> [OPTION]... [ARG]...
   ```
+
 - **Short Description**  
   <2–4 sentences>
 
@@ -14,13 +16,16 @@
 # 2. Purpose
 
 ## Why this command exists
+
 <paragraph>
 
 ## What problem it solves
+
 - <bullet>
 - <bullet>
 
 ## When it should be used
+
 - <bullet>
 - <bullet>
 
@@ -29,11 +34,13 @@
 # 3. How it Works
 
 ## Internal working
+
 1. <step>
 2. <step>
 3. <step>
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | | |
@@ -53,21 +60,25 @@
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # ...
 ```
 
 ## Intermediate example
+
 ```bash
 # ...
 ```
 
 ## Advanced example
+
 ```bash
 # ...
 ```
 
 ## Real-world system administration example
+
 ```bash
 # ...
 ```
@@ -89,19 +100,19 @@
 
 # 7. Advantages
 
-- **Performance:** 
-- **Ease of use:** 
-- **Automation:** 
-- **Security:** 
+- **Performance:**
+- **Ease of use:**
+- **Automation:**
+- **Security:**
 
 ---
 
 # 8. Disadvantages
 
-- **Limitations:** 
-- **Risks:** 
-- **Common mistakes:** 
-- **Performance issues:** 
+- **Limitations:**
+- **Risks:**
+- **Common mistakes:**
+- **Performance issues:**
 
 ---
 
@@ -147,13 +158,16 @@
 # 14. Interview Questions
 
 ## Beginner
-1. 
+
+1.
 
 ## Intermediate
-2. 
+
+2.
 
 ## Advanced
-3. 
+
+3.
 
 ---
 

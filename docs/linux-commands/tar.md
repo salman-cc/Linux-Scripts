@@ -3,10 +3,12 @@
 **`tar`** — tape archive; create, list, and extract archives
 
 - **Syntax**
+
   ```bash
   tar [OPTION...] [FILE]...
   tar -c|-x|-t [options] [-f ARCHIVE] [FILE...]
   ```
+
 - **Short Description**  
   Bundles multiple files and directories into a single archive (historically for tape). Combined with compression tools (`gzip`, `bzip2`, `xz`, `zstd`) it is the standard packaging format on Linux.
 
@@ -15,15 +17,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Unix needed a portable way to package directory trees for backup, transport, and distribution while preserving structure and metadata.
 
 ## What problem it solves
+
 - Create archives of projects, configs, and backups
 - Extract vendor tarballs and source releases
 - Preserve permissions, ownership, and hierarchy
 - Stream archives over the network (with `ssh`)
 
 ## When it should be used
+
 - Source distribution (`project-1.0.tar.gz`)
 - Configuration backups
 - Log archiving before rotation/deletion
@@ -36,12 +41,14 @@ For incremental sync of live trees, prefer `rsync`. For single-file compression 
 # 3. How it Works
 
 ## Internal working
+
 1. **Create (`-c`)**: walks files, writes tar headers + content sequentially into an archive.
 2. **Extract (`-x`)**: reads headers and recreates files/dirs with stored metadata.
 3. **List (`-t`)**: shows archive members without extracting.
 4. Compression is either via flags (`-z`, `-J`, `-I`) or external filters.
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Archive** | Sequential stream of file objects + headers |
@@ -77,6 +84,7 @@ For incremental sync of live trees, prefer `rsync`. For single-file compression 
 | `--numeric-owner` | Store/extract numeric uid/gid | useful for backups |
 
 Common short combo style (order flexible for many flags):
+
 ```bash
 tar -czvf archive.tar.gz directory/
 ```
@@ -86,6 +94,7 @@ tar -czvf archive.tar.gz directory/
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # Create a simple archive
 tar -cf project.tar project/
@@ -98,6 +107,7 @@ tar -xf project.tar
 ```
 
 ## Intermediate example
+
 ```bash
 # Compressed backup excluding git metadata
 tar -czvf myapp-backup.tar.gz --exclude='.git' --exclude='node_modules' myapp/
@@ -107,6 +117,7 @@ mkdir -p /tmp/restore && tar -xzf myapp-backup.tar.gz -C /tmp/restore
 ```
 
 ## Advanced example
+
 ```bash
 # Stream archive over SSH to remote host
 tar -C /etc -czf - nginx | ssh admin@backup-host "cat > /backups/nginx-$(date +%F).tar.gz"
@@ -119,6 +130,7 @@ tar -tzf backup.tar.gz | grep '\.conf$'
 ```
 
 ## Real-world system administration example
+
 ```bash
 # 🔐 Daily /etc snapshot (simple approach)
 sudo tar -czpf /var/backups/etc-$(date +%F).tar.gz -C / etc
@@ -248,15 +260,18 @@ tar -czf - mydir | gpg -c > mydir.tar.gz.gpg
 # 14. Interview Questions
 
 ## Beginner
+
 1. How do you create a `.tar.gz` of a directory?  
 2. How do you list archive contents without extracting?
 
 ## Intermediate
+
 3. Difference between `-c`, `-x`, and `-t`?  
 4. What does `-C` do?  
 5. How do you exclude `node_modules`?
 
 ## Advanced
+
 6. How can you stream a tar archive over SSH?  
 7. Security risks of extracting untrusted tarballs?  
 8. When would you choose `zstd` vs `gzip` vs `xz`?

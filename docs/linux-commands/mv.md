@@ -3,11 +3,13 @@
 **`mv`** — move (rename) files and directories
 
 - **Syntax**
+
   ```bash
   mv [OPTION]... [-T] SOURCE DEST
   mv [OPTION]... SOURCE... DIRECTORY
   mv [OPTION]... -t DIRECTORY SOURCE...
   ```
+
 - **Short Description**  
   Renames a file/directory or relocates it to another path. On the same filesystem this is usually a fast metadata operation; across filesystems it copies then removes the source.
 
@@ -16,15 +18,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Files need renaming for clarity and relocation for organization, deployment, log rotation patterns, and atomic publish techniques (write temp → `mv` into place).
 
 ## What problem it solves
+
 - Rename `file.txt` → `file.md`
 - Move files into another directory
 - Relocate entire directory trees
 - Atomically replace a target on the same filesystem
 
 ## When it should be used
+
 - Organizing project structure
 - Promoting build artifacts into live paths
 - Rotating or archiving logs/configs
@@ -35,11 +40,13 @@ Files need renaming for clarity and relocation for organization, deployment, log
 # 3. How it Works
 
 ## Internal working
+
 1. **Same filesystem:** typically `rename()` system call — instant, preserves inode; open file descriptors keep working.
 2. **Cross filesystem:** equivalent to copy + delete source (data rewrite; not atomic).
 3. Destination handling depends on whether DEST exists and is a directory.
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Rename vs move** | Same operation; “move” emphasizes path change |
@@ -71,6 +78,7 @@ Files need renaming for clarity and relocation for organization, deployment, log
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # Rename
 mv draft.txt final.txt
@@ -80,6 +88,7 @@ mv photo.jpg ~/Pictures/
 ```
 
 ## Intermediate example
+
 ```bash
 # Move multiple files
 mv chapter1.md chapter2.md chapter3.md ./book/
@@ -89,6 +98,7 @@ mv -i production.env production.env.old
 ```
 
 ## Advanced example
+
 ```bash
 # Atomic publish pattern (same filesystem)
 install -m 644 app.conf.new /etc/myapp/app.conf.tmp
@@ -99,6 +109,7 @@ mv --backup=numbered site.conf /etc/nginx/conf.d/site.conf
 ```
 
 ## Real-world system administration example
+
 ```bash
 # Disable a config without deleting (common nginx/httpd pattern)
 sudo mv /etc/nginx/conf.d/bad-site.conf /etc/nginx/conf.d/bad-site.conf.disabled
@@ -209,14 +220,17 @@ sudo mv /var/log/myapp/*.log.1 /var/log/myapp/2026-07/
 # 14. Interview Questions
 
 ## Beginner
+
 1. How do you rename a file in Linux?  
 2. What happens if destination exists?
 
 ## Intermediate
+
 3. Same-filesystem vs cross-filesystem `mv` behavior?  
 4. How can `mv` help atomic deployments?
 
 ## Advanced
+
 5. Why might a process still read a file after it was `mv`’d away?  
 6. How do directory write permissions affect `mv`?
 

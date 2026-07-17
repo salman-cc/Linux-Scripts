@@ -1,0 +1,33 @@
+{
+  // Config for Linux Commands Library documentation.
+  // Intentionally relaxed for long command examples, tables, and the
+  // fixed 20-section structure (multiple H1 section titles per page).
+  "config": {
+    "default": true,
+
+    // Docs use "# 1. Command Name" … "# 20. Summary" as section titles.
+    "MD025": false,
+
+    // Command tables and long one-liners routinely exceed 80 columns.
+    "MD013": false,
+
+    // Compact Markdown tables are readable and standard in this library.
+    "MD060": false,
+
+    // Interview Qs and multi-part lists often restart numbering per section.
+    "MD029": false,
+
+    // Inline HTML is used sparingly for emphasis markers if needed.
+    "MD033": false,
+
+    // Emphasis-as-heading appears in short callouts.
+    "MD036": false
+  },
+  "globs": [
+    "**/*.md"
+  ],
+  "ignores": [
+    "node_modules/**",
+    ".git/**"
+  ]
+}

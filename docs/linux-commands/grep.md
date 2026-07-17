@@ -3,11 +3,13 @@
 **`grep`** — print lines that match a pattern
 
 - **Syntax**
+
   ```bash
   grep [OPTION]... PATTERNS [FILE]...
   grep [OPTION]... -e PATTERNS ... [FILE]...
   grep [OPTION]... -f PATTERN_FILE [FILE]...
   ```
+
 - **Short Description**  
   Searches input files or standard input for lines matching a regular expression (or fixed string) and prints matches. Essential for log analysis, code search, and scripting.
 
@@ -16,15 +18,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Text is everywhere in Linux: configs, logs, source code, command output. Operators need a fast filter to extract relevant lines.
 
 ## What problem it solves
+
 - Find lines containing a keyword or regex
 - Filter command pipelines
 - Recursively search project trees
 - Invert match, count matches, show context
 
 ## When it should be used
+
 - Troubleshooting logs (`journalctl`, `/var/log`)
 - Searching codebases (or use `rg`/`ag` when available)
 - Validating configuration content
@@ -35,6 +40,7 @@ Text is everywhere in Linux: configs, logs, source code, command output. Operato
 # 3. How it Works
 
 ## Internal working
+
 1. Compiles the pattern (basic/extended/Perl regex engine depending on flags).
 2. Reads each input line.
 3. Tests the line against the pattern.
@@ -42,6 +48,7 @@ Text is everywhere in Linux: configs, logs, source code, command output. Operato
 5. Sets exit status based on whether any match was found.
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **BRE** | Basic Regular Expressions (default traditional `grep`) |
@@ -86,6 +93,7 @@ Text is everywhere in Linux: configs, logs, source code, command output. Operato
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # Find lines containing "error" in a log
 grep error /var/log/syslog
@@ -95,11 +103,13 @@ grep -i warning app.log
 ```
 
 Example output:
+
 ```text
 Mar 12 10:01:22 host app[2201]: error: connection refused
 ```
 
 ## Intermediate example
+
 ```bash
 # Comments and blank lines removed from config
 grep -vE '^\s*#|^\s*$' /etc/ssh/sshd_config
@@ -112,6 +122,7 @@ grep -nC3 "Failed password" /var/log/auth.log
 ```
 
 ## Advanced example
+
 ```bash
 # Extract IPv4-like tokens (simplified)
 grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}' access.log | sort | uniq -c | sort -nr | head
@@ -124,6 +135,7 @@ systemctl --failed | grep -i failed
 ```
 
 ## Real-world system administration example
+
 ```bash
 # 🔐 Audit sudo usage
 sudo grep -i 'sudo:' /var/log/auth.log | tail -n 50
@@ -154,6 +166,7 @@ fi
 | `sed` | Edit stream by pattern | Substitution, in-place edits |
 
 **Why prefer one over another?**  
+
 - **`grep`**: universal and script-safe.  
 - **`rg`**: interactive code search speed.  
 - **`awk`/`sed`**: when matching is only part of transformation.
@@ -256,16 +269,19 @@ find /var/log -type f -name '*.log' -print0 | xargs -0 grep -H 'OutOfMemory'
 # 14. Interview Questions
 
 ## Beginner
+
 1. How do you search for a string in a file?  
 2. What does `grep -i` do?  
 3. How do you show line numbers?
 
 ## Intermediate
+
 4. Difference between `grep`, `grep -E`, and `grep -F`?  
 5. Explain exit codes 0, 1, and 2.  
 6. How do you recursively search while skipping `.git`?
 
 ## Advanced
+
 7. When would you choose PCRE (`-P`) over ERE?  
 8. How do you safely match literal user input?  
 9. Performance considerations on multi-GB logs?

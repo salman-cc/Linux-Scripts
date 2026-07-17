@@ -3,11 +3,13 @@
 **`sed`** — stream editor for filtering and transforming text
 
 - **Syntax**
+
   ```bash
   sed [OPTION]... {script-only-if-no-other-script} [input-file]...
   sed [OPTION]... -e script ... [input-file]...
   sed [OPTION]... -f script-file ... [input-file]...
   ```
+
 - **Short Description**  
   Reads text stream line by line, applies editing commands (substitute, delete, print, insert, etc.), and writes the result. Famous for non-interactive search-and-replace.
 
@@ -16,15 +18,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Admins and developers must transform configs, logs, and data streams without opening a full editor — especially in pipelines and automation.
 
 ## What problem it solves
+
 - Replace text patterns across files
 - Delete or print selected lines
 - In-place config edits in scripts
 - Lightweight text ETL in shell pipelines
 
 ## When it should be used
+
 - Bulk string replacement
 - Cleaning command output
 - Automated config templating (simple cases)
@@ -37,6 +42,7 @@ For complex field-oriented processing, prefer `awk`. For interactive edits, use 
 # 3. How it Works
 
 ## Internal working
+
 1. Reads a line into the **pattern space**.
 2. Applies sed script commands to the pattern space.
 3. By default prints the pattern space (unless `-n`).
@@ -44,6 +50,7 @@ For complex field-oriented processing, prefer `awk`. For interactive edits, use 
 5. Optional **hold space** stores text across lines for advanced scripts.
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Pattern space** | Working buffer for current line |
@@ -69,7 +76,7 @@ For complex field-oriented processing, prefer `awk`. For interactive edits, use 
 | `-E` / `-r` | Extended regex (GNU: both) | `sed -E 's/[0-9]+/N/g'` |
 | `-z` | NUL-separated records (GNU) | multi-line-ish processing |
 
-### Common script commands
+## Common script commands
 
 | Command | Meaning | Example |
 |---------|---------|---------|
@@ -89,6 +96,7 @@ For complex field-oriented processing, prefer `awk`. For interactive edits, use 
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # Replace first "http" with "https" on each line
 sed 's/http/https/' urls.txt
@@ -98,6 +106,7 @@ sed '/^$/d' file.txt
 ```
 
 ## Intermediate example
+
 ```bash
 # Global replace
 sed 's/foo/bar/g' app.conf
@@ -110,6 +119,7 @@ sed '/^#/d' config.ini
 ```
 
 ## Advanced example
+
 ```bash
 # Capture groups (ERE)
 sed -E 's/([0-9]{1,3}\.){3}[0-9]{1,3}/[IP]/Dacted]/g' access.log
@@ -122,6 +132,7 @@ sed -e '/^#/d' -e '/^$/d' -e 's/[[:space:]]*$//' messy.conf
 ```
 
 ## Real-world system administration example
+
 ```bash
 # 🔐 Disable a systemd service unit WantedBy line carefully (prefer systemctl tools when possible)
 # Example: change a config value in a simple key=value file
@@ -241,15 +252,18 @@ find . -name '*.conf' -print0 | xargs -0 sed -i 's/old/new/g'
 # 14. Interview Questions
 
 ## Beginner
+
 1. How do you replace `foo` with `bar` in a file using sed?  
 2. What does the `g` flag mean in `s///g`?
 
 ## Intermediate
+
 3. How do you delete all comment lines starting with `#`?  
 4. Difference between `sed` and `grep`?  
 5. How do addresses work (`/regex/`, line numbers)?
 
 ## Advanced
+
 6. Explain pattern space vs hold space.  
 7. Portability issues with `sed -i`?  
 8. When is `awk` a better choice than `sed`?

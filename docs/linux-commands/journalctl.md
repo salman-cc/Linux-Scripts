@@ -3,9 +3,11 @@
 **`journalctl`** — query the systemd journal
 
 - **Syntax**
+
   ```bash
   journalctl [OPTIONS...] [MATCHES...]
   ```
+
 - **Short Description**  
   Reads and filters logs collected by **systemd-journald**. Provides structured, centralized access to kernel messages, service logs, and boot history — often replacing traditional ad-hoc log file grepping for systemd-managed systems.
 
@@ -14,15 +16,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 systemd services commonly log to the journal instead of (or in addition to) plain files under `/var/log`. Operators need a powerful query tool with time ranges, unit filters, and follow mode.
 
 ## What problem it solves
+
 - View logs for a specific service/unit
 - Inspect previous boots after crashes
 - Filter by priority, time, executable, PID
 - Stream live logs while debugging
 
 ## When it should be used
+
 - Service start failures
 - Boot troubleshooting
 - Security/auth event review (when journal-backed)
@@ -35,12 +40,14 @@ systemd services commonly log to the journal instead of (or in addition to) plai
 # 3. How it Works
 
 ## Internal working
+
 1. journald stores log data in binary journal files (`/run/log/journal` volatile and/or `/var/log/journal` persistent).
 2. `journalctl` opens those files and applies filters/matches.
 3. Can export plain text, JSON, or follow like `tail -f`.
 4. Uses indexed fields (`_SYSTEMD_UNIT`, `PRIORITY`, `_PID`, …) for efficient queries.
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Journal** | Binary structured log storage |
@@ -83,6 +90,7 @@ systemd services commonly log to the journal instead of (or in addition to) plai
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # All messages current boot (may be long)
 journalctl -b
@@ -92,6 +100,7 @@ journalctl -n 100 --no-pager
 ```
 
 ## Intermediate example
+
 ```bash
 # Service logs
 journalctl -u sshd --since today
@@ -104,6 +113,7 @@ journalctl -b -p err
 ```
 
 ## Advanced example
+
 ```bash
 # Previous boot crash analysis
 journalctl --list-boots
@@ -117,6 +127,7 @@ journalctl -u myapp --since "1 hour ago" -g "timeout|OutOfMemory"
 ```
 
 ## Real-world system administration example
+
 ```bash
 # 🔐 Post-incident package: capture service failure context
 sudo journalctl -u payment-api -b -p info --no-pager > /root/payment-api-boot.log
@@ -199,11 +210,13 @@ Note: “no entries matched” is typically still success with empty output.
 - Don’t blindly vacuum during active investigations
 
 Persistent journal (concept):
+
 ```bash
 sudo mkdir -p /var/log/journal
 sudo systemd-tmpfiles --create --prefix /var/log/journal
 sudo systemctl restart systemd-journald
 ```
+
 (Exact steps may vary by distro policy.)
 
 ---
@@ -247,15 +260,18 @@ journalctl -u broken-service -b -n 200 --no-pager
 # 14. Interview Questions
 
 ## Beginner
+
 1. How do you view logs for a systemd service?  
 2. What does `journalctl -f` do?
 
 ## Intermediate
+
 3. How do you view logs from the previous boot?  
 4. Difference between journald and classic `/var/log/messages`?  
 5. How do you filter by priority?
 
 ## Advanced
+
 6. How does persistent vs volatile journaling differ?  
 7. How would you export journal data for a SIEM?  
 8. What retention controls exist (`SystemMaxUse`, vacuum)?

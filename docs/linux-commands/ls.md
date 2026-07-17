@@ -3,9 +3,11 @@
 **`ls`** — list directory contents
 
 - **Syntax**
+
   ```bash
   ls [OPTION]... [FILE]...
   ```
+
 - **Short Description**  
   Displays names of files and directories. With options, it can show permissions, ownership, sizes, timestamps, hidden files, and more. One of the first commands every Linux user learns.
 
@@ -14,15 +16,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Unix/Linux stores files in a hierarchical filesystem. Users need a fast way to inspect what exists in a directory without a graphical file manager.
 
 ## What problem it solves
+
 - Discover files and folders in a path
 - Inspect metadata (permissions, owner, size, mtime)
 - Distinguish types (file, directory, symlink, device)
 - Support scripting and automation that depends on directory state
 
 ## When it should be used
+
 - Navigating the filesystem interactively
 - Verifying deployments, backups, or package installs
 - Checking permissions before editing or deleting
@@ -33,6 +38,7 @@ Unix/Linux stores files in a hierarchical filesystem. Users need a fast way to i
 # 3. How it Works
 
 ## Internal working
+
 1. `ls` resolves each path argument (default: current directory `.`).
 2. It calls system APIs such as `opendir()` / `readdir()` (and often `stat()` / `lstat()` when long format or sorting needs metadata).
 3. Entries are filtered (e.g. hide names starting with `.` unless `-a`/`-A`).
@@ -40,6 +46,7 @@ Unix/Linux stores files in a hierarchical filesystem. Users need a fast way to i
 5. Output is formatted for the terminal (columns) or as one-per-line when piped (GNU `ls` often detects non-TTY).
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Hidden files** | Names starting with `.` (e.g. `.bashrc`) |
@@ -77,6 +84,7 @@ Unix/Linux stores files in a hierarchical filesystem. Users need a fast way to i
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # List current directory
 ls
@@ -89,12 +97,14 @@ ls -la ~/.config
 ```
 
 Example output (`ls -l`):
+
 ```text
 -rw-r--r-- 1 alice alice  220 Mar 10 09:12 .bash_logout
 drwxr-xr-x 5 alice alice 4096 Mar 12 14:01 Documents
 ```
 
 ## Intermediate example
+
 ```bash
 # Newest files last (classic admin view of logs / downloads)
 ls -ltr /var/log
@@ -107,6 +117,7 @@ ls -ld /etc /var /home
 ```
 
 ## Advanced example
+
 ```bash
 # Find recently modified files among many (combine sort + head)
 ls -lt /var/log/*.log 2>/dev/null | head -n 20
@@ -119,6 +130,7 @@ ls -1 --quoting-style=shell-escape /data
 ```
 
 ## Real-world system administration example
+
 ```bash
 # After deploy: verify artifact ownership and modes
 ls -l /opt/myapp/releases/current
@@ -147,6 +159,7 @@ ls -lad /etc/systemd/system/nginx.service.d
 | `exa` / `eza` / `lsd` | Modern third-party listers | Enhanced UX if installed |
 
 **Why prefer one over another?**  
+
 - Prefer **`ls`** for interactive inspection and simple scripts.  
 - Prefer **`find`** when you need predicates (`-mtime`, `-name`, `-type`).  
 - Prefer **`stat`** when you need precise timestamps or raw mode bits.  
@@ -233,6 +246,7 @@ alias l='ls -CF'
 | `find` | Advanced selection then act |
 
 Typical workflow:
+
 ```bash
 pwd
 ls -lah
@@ -261,16 +275,19 @@ stat important.conf
 # 14. Interview Questions
 
 ## Beginner
+
 1. What does `ls -l` show that plain `ls` does not?  
 2. How do you list hidden files?  
 3. What is the difference between `-a` and `-A`?
 
 ## Intermediate
+
 4. Explain each field of `ls -l` output.  
 5. How does `ls -d` behave differently for directories?  
 6. Why is parsing `ls` in scripts considered bad practice?
 
 ## Advanced
+
 7. How does locale affect `ls` sorting, and how do you force C locale sort?  
 8. Difference between `ls -l` on a symlink vs `ls -lL` (if available) / following links.  
 9. What system calls does a long listing typically trigger, and why is `ls -lR /` expensive?
@@ -287,6 +304,7 @@ stat important.conf
 | **DevOps interviews** | Scripting pitfalls; combining with `grep`/`awk` |
 
 **Key exam facts**
+
 - First character of mode: `-` file, `d` directory, `l` symlink, `c`/`b` devices, etc.
 - Link count field matters for directories and hard links
 - Size for directories is metadata size, not recursive contents
@@ -366,6 +384,7 @@ watch -n 1 'ls -ltr /var/log'
 ```
 
 Productivity:
+
 ```bash
 # In scripts, prefer:
 printf '%s\n' * 

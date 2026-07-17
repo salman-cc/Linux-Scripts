@@ -3,10 +3,12 @@
 **`awk`** — pattern scanning and processing language
 
 - **Syntax**
+
   ```bash
   awk [OPTION]... 'program' [file...]
   awk [OPTION]... -f progfile [file...]
   ```
+
 - **Short Description**  
   A small programming language specialized for line-oriented, field-aware text processing. Ideal for reports, log analytics, and column manipulation.
 
@@ -15,15 +17,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Much Unix data is structured as records (lines) and fields (columns). `awk` was designed to process that model without compiling a full program.
 
 ## What problem it solves
+
 - Split lines into fields and print selected columns
 - Filter rows by conditions
 - Compute sums, averages, counts
 - Format reports from command output and logs
 
 ## When it should be used
+
 - Parsing `ps`, `df`, `netstat`/`ss`, CSV-like data
 - Quick data analysis in the shell
 - Writing portable text-processing one-liners
@@ -34,6 +39,7 @@ Much Unix data is structured as records (lines) and fields (columns). `awk` was 
 # 3. How it Works
 
 ## Internal working
+
 1. Optionally runs `BEGIN { ... }` before reading input.
 2. For each record (default: line), splits into fields (`$1`, `$2`, … `$NF`).
 3. Evaluates pattern/action rules: `pattern { action }`.
@@ -41,6 +47,7 @@ Much Unix data is structured as records (lines) and fields (columns). `awk` was 
 5. Built-in variables track NR, NF, FS, OFS, etc.
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Record** | Usually one line (`RS` newline) |
@@ -67,7 +74,7 @@ Variants: **`awk`** (often `mawk` or `gawk` on Linux), **`gawk`** (GNU, richest 
 | `-v var=val` | Set variable before run | `awk -v thr=90 '$3>thr'` |
 | `-O` / etc. | Implementation-specific | See `gawk` man |
 
-### Language essentials (not CLI flags)
+## Language essentials (not CLI flags)
 
 | Construct | Meaning | Example |
 |-----------|---------|---------|
@@ -85,6 +92,7 @@ Variants: **`awk`** (often `mawk` or `gawk` on Linux), **`gawk`** (GNU, richest 
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # Print usernames from passwd
 awk -F: '{print $1}' /etc/passwd
@@ -94,6 +102,7 @@ ps aux | awk '{print $1, $11}'
 ```
 
 ## Intermediate example
+
 ```bash
 # Sum a numeric column
 awk '{sum+=$1} END {print sum}' numbers.txt
@@ -106,6 +115,7 @@ awk 'NR>1 && $3+0 > 80 {print $1,$3}' metrics.csv
 ```
 
 ## Advanced example
+
 ```bash
 # Average of column 2 grouped by column 1
 awk '{
@@ -120,6 +130,7 @@ df -P | awk 'NR>1 && $5+0 > 80 {print $6, $5}'
 ```
 
 ## Real-world system administration example
+
 ```bash
 # Top talkers from simplified access log (field positions depend on format)
 awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -nr | head
@@ -236,15 +247,18 @@ awk -v user="$USER" '$1==user {print $0}' access.db
 # 14. Interview Questions
 
 ## Beginner
+
 1. How do you print the first column with awk?  
 2. What is `$0`?
 
 ## Intermediate
+
 3. Difference between `NR` and `NF`?  
 4. How do you set a custom field separator?  
 5. Write an awk one-liner to sum a column.
 
 ## Advanced
+
 6. How do associative arrays work in awk?  
 7. Explain `BEGIN` and `END` blocks.  
 8. POSIX awk vs gawk differences you have hit in production?

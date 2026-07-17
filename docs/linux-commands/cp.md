@@ -3,11 +3,13 @@
 **`cp`** — copy files and directories
 
 - **Syntax**
+
   ```bash
   cp [OPTION]... [-T] SOURCE DEST
   cp [OPTION]... SOURCE... DIRECTORY
   cp [OPTION]... -t DIRECTORY SOURCE...
   ```
+
 - **Short Description**  
   Creates a duplicate of files or directory trees at a new location. Source content is read and written to the destination; originals remain unless you remove them separately.
 
@@ -16,15 +18,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Systems constantly need duplicates: backups, staging configs, deploying artifacts, cloning templates, and recovering from mistakes without destroying the original.
 
 ## What problem it solves
+
 - Duplicate a file under a new name or path
 - Copy many files into a directory
 - Recursively copy trees (`-r` / `-R` / `-a`)
 - Preserve attributes (mode, ownership, timestamps) when required
 
 ## When it should be used
+
 - Creating backups before edits
 - Deploying static files to a target host path
 - Seeding project skeletons
@@ -37,6 +42,7 @@ For efficient remote or incremental copies, prefer `rsync` (see [rsync.md](rsync
 # 3. How it Works
 
 ## Internal working
+
 1. Opens the source file(s).
 2. Creates or truncates the destination (depending on options and existing files).
 3. Reads source data in blocks and writes to destination.
@@ -44,6 +50,7 @@ For efficient remote or incremental copies, prefer `rsync` (see [rsync.md](rsync
 5. For directories, walks the tree and repeats for each entry.
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Overwrite** | By default, existing DEST files may be overwritten |
@@ -82,6 +89,7 @@ For efficient remote or incremental copies, prefer `rsync` (see [rsync.md](rsync
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # Copy a single file
 cp notes.txt notes.bak
@@ -91,6 +99,7 @@ cp report.pdf ~/Documents/
 ```
 
 ## Intermediate example
+
 ```bash
 # Recursive copy of a project (simple)
 cp -r myproject myproject-backup
@@ -103,6 +112,7 @@ cp -i important.conf /etc/myapp/important.conf
 ```
 
 ## Advanced example
+
 ```bash
 # Archive-style backup of nginx config tree
 cp -a /etc/nginx /var/backups/nginx-$(date +%F)
@@ -115,6 +125,7 @@ cp --reflink=auto -a /vm/disk.qcow2 /vm/disk-clone.qcow2
 ```
 
 ## Real-world system administration example
+
 ```bash
 # Before editing a production config (🔐 may need sudo)
 sudo cp -a /etc/fstab /etc/fstab.bak.$(date +%Y%m%d%H%M%S)
@@ -142,6 +153,7 @@ fi
 | `tar` + pipe | Stream trees with attributes | Network copy patterns, archiving |
 
 **Why prefer one over another?**  
+
 - **`cp`**: simplest local copy.  
 - **`rsync`**: large/incremental/remote or need `--delete`.  
 - **`install`**: set permissions in one step for deployed files.  
@@ -250,15 +262,18 @@ diff -u app.conf.bak app.conf
 # 14. Interview Questions
 
 ## Beginner
+
 1. How do you copy a directory with `cp`?  
 2. What does `cp file1 file2` do if `file2` exists?
 
 ## Intermediate
+
 3. Difference between `cp -r` and `cp -a`?  
 4. How do you prevent overwriting existing files?  
 5. What is preserved by `cp -p`?
 
 ## Advanced
+
 6. How do symlinks behave with `-P` vs `-L`?  
 7. What is reflink copy and when does it help?  
 8. Why might `cp -a` fail to preserve ownership for a normal user?

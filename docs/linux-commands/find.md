@@ -3,9 +3,11 @@
 **`find`** — search for files in a directory hierarchy
 
 - **Syntax**
+
   ```bash
   find [-H] [-L] [-P] [path...] [expression]
   ```
+
 - **Short Description**  
   Walks directory trees and selects files based on name, type, size, time, permissions, ownership, and more — then prints them or runs actions (`-exec`, `-delete`).
 
@@ -14,15 +16,18 @@
 # 2. Purpose
 
 ## Why this command exists
+
 Real systems have thousands to millions of files. Manual browsing with `ls` does not scale; admins need predicate-based search and bulk actions.
 
 ## What problem it solves
+
 - Locate files by name/path pattern
 - Find large, old, empty, or permission-sensitive files
 - Apply commands to matching sets safely
 - Inventory systems for audits and cleanups
 
 ## When it should be used
+
 - Disk cleanup (`-size`, `-mtime`)
 - Security audits (SUID, world-writable)
 - Build/deploy artifact cleanup
@@ -33,6 +38,7 @@ Real systems have thousands to millions of files. Manual browsing with `ls` does
 # 3. How it Works
 
 ## Internal working
+
 1. Starts at given path(s) (default `.`).
 2. Recursively descends directories (unless pruned).
 3. Evaluates an expression tree of tests and actions.
@@ -40,6 +46,7 @@ Real systems have thousands to millions of files. Manual browsing with `ls` does
 5. Respects symlink policy (`-P` default: don’t follow).
 
 ## Important concepts
+
 | Concept | Meaning |
 |---------|---------|
 | **Tests** | `-name`, `-type`, `-mtime`, `-size`, … |
@@ -83,6 +90,7 @@ Real systems have thousands to millions of files. Manual browsing with `ls` does
 # 5. Practical Examples
 
 ## Beginner example
+
 ```bash
 # All .txt files under home
 find ~ -type f -name '*.txt'
@@ -92,6 +100,7 @@ find /etc -maxdepth 1 -type d
 ```
 
 ## Intermediate example
+
 ```bash
 # Files modified in last 24 hours
 find /var/log -type f -mtime -1
@@ -104,6 +113,7 @@ find /opt/myapp -type d -empty
 ```
 
 ## Advanced example
+
 ```bash
 # Safe delete of old temp files (NUL-safe pipeline alternative)
 find /tmp -type f -mtime +7 -print0 | xargs -0 --no-run-if-empty rm -f
@@ -116,6 +126,7 @@ find . \( -name .git -o -name node_modules \) -prune -o -type f -name '*.js' -pr
 ```
 
 ## Real-world system administration example
+
 ```bash
 # Cleanup old application logs older than 30 days
 sudo find /var/log/myapp -type f -name '*.log' -mtime +30 -delete
@@ -240,15 +251,18 @@ find /var/tmp -type f -mtime +14 -print0 | xargs -0 rm -f
 # 14. Interview Questions
 
 ## Beginner
+
 1. How do you find all `.log` files under `/var`?  
 2. What does `-type d` mean?
 
 ## Intermediate
+
 3. Difference between `-mtime -1` and `-mtime +1`?  
 4. How does `-exec ... {} \;` differ from `{} +`?  
 5. How do you exclude a directory from descent?
 
 ## Advanced
+
 6. Explain `-perm -4000` vs `-perm /4000` (GNU).  
 7. Why is `-print0` important?  
 8. How do you find files with no owner (`-nouser`)?
