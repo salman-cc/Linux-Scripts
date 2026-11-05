@@ -33,6 +33,23 @@ Each document covers syntax, purpose, internals, options, examples (beginner →
 
 A reusable blank structure is available at [`docs/linux-commands/TEMPLATE.md`](docs/linux-commands/TEMPLATE.md).
 
+## Utility scripts
+
+Executable Bash utilities in [`scripts/`](scripts/), each with a
+`--help` header and functional tests in
+[`tests/run_tests.sh`](tests/run_tests.sh):
+
+| Script | What it does |
+| ------ | ------------ |
+| [`sys_health.sh`](scripts/sys_health.sh) | Load/memory/disk summary with OK/WARN/CRIT verdicts and a non-zero exit on CRIT |
+| [`backup_rotate.sh`](scripts/backup_rotate.sh) | Timestamped tar backup with count-based rotation and a dry-run mode |
+
+Run the tests with:
+
+```sh
+tests/run_tests.sh
+```
+
 ## Status
 
 🚧 Active Development
