@@ -2,7 +2,7 @@
 
 > Comprehensive reference documentation for students, developers, DevOps engineers, and system administrators.
 
-**Repository:** [ccsalman545/Linux-Scripts](https://github.com/ccsalman545/Linux-Scripts)  
+**Repository:** [salman-cc/Linux-Scripts](https://github.com/salman-cc/Linux-Scripts)  
 **Maintainer:** Muhammed Salman CC  
 **Audience:** Beginners → Advanced | RHCSA · RHCE · LPIC · Linux+ · DevOps interviews
 
